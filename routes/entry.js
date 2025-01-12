@@ -15,8 +15,9 @@ router.post('/', multer().single('image'), uploadToCloudinary, async function(re
       ,entry: req.body.entry
       ,mediaURL: req.file.cloudinaryUrl
       ,stageID: new ObjectId(req.body.stageID)
+      ,user: req.body.user
     }
-
+    
     await db.collection('entries').insertOne(newEntry)
     res.send('Created new post');
     
