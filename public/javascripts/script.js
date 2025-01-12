@@ -162,13 +162,20 @@ document.addEventListener('DOMContentLoaded', () => {
         plant_stage_name = sel_opt_drop[sel_opt_drop.selectedIndex].innerHTML
     })
 
+    //signin container
+    const sign_container = document.querySelector('.sign_container');
+
     // CREATE plant entry
     const denied_post = document.querySelector('.post_denied');
     const post_entry_container = document.querySelector('.post_container');
     const create_icon = document.querySelector('.add_post_icon');
     create_icon.addEventListener('click', () => {
-        post_entry_container.style.display = "flex";
-        denied_post.style.display = 'none';
+        if(sessionStorage.getItem('username') === 'false' || sessionStorage.getItem('username') === null){
+            sign_container.style.display = 'flex';
+        }else{
+            post_entry_container.style.display = "flex";
+            denied_post.style.display = 'none';
+        }
     })
     
     // CANCEL plant entry
@@ -204,6 +211,7 @@ document.addEventListener('DOMContentLoaded', () => {
             new_entry.classList.add('entry')
             const new_plant_entry = document.createElement('div')
             const clone_cut = document.querySelector('.delete_cut').cloneNode(true);
+            clone_cut.classList.remove('no_access')
             const clone_preview = document.querySelector('.plant_preview').cloneNode(true);
             new_entry.appendChild(new_plant_entry)
             new_plant_entry.appendChild(clone_cut)
@@ -218,6 +226,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             //add plant entry to entries
             formData.append('stageID', plant_stage)
+            formData.append('user', sessionStorage.getItem('username'))
 
             await fetch('/entry', {
                 method: 'POST'
@@ -528,6 +537,106 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     })
 
+    // signin/up with cookies
+    const account_name = document.querySelector('.account_name')
+    const user_name = document.querySelector('.user_name');
+    const sign_out_section = document.querySelector('.sign_out_section')
+    const sign_section = document.querySelector('.sign_section')
+    if(sessionStorage.getItem('username') === 'false' || sessionStorage.getItem('username') === null){
+        account_name.innerHTML = 'Sign In';
+        sign_out_section.style.display = 'none'
+        sign_section.style.display = 'flex'
+    }else{
+        account_name.innerHTML = sessionStorage.getItem('username');
+        user_name.innerHTML = sessionStorage.getItem('username');
+        sign_out_section.style.display = 'flex'
+        sign_section.style.display = 'none'
+    }
+
+    const close_all_sign = document.querySelectorAll('.close_sign');
+    const sign_denied = document.querySelector('.sign_denied')
+    close_all_sign.forEach(close_sign => {
+        close_sign.addEventListener('click', () => {
+            sign_denied.style.display = 'none';
+            sign_container.style.display = 'none';
+        })
+    })
+
+    const account = document.querySelector('#account');
+    account.addEventListener('click', () => {
+        sign_container.style.display = 'flex';
+    })
+
+    const switch_sign = document.querySelector('.switch_sign')
+    const sign_header = document.querySelector('.sign_method h1')
+    const sign_small = document.querySelector('.sign_method small')
+    const sign_btn = document.querySelector('.sign_btn')
+    switch_sign.addEventListener('click', () => {
+        if(sign_header.innerHTML === 'Sign In'){
+            sign_header.innerHTML = 'Sign Up'
+            sign_small.innerHTML = 'Have an account? Sign In!'
+            sign_btn.innerHTML = 'Sign Up'
+        }else{
+            sign_header.innerHTML = 'Sign In'
+            sign_small.innerHTML = 'No account? Sign Up!'
+            sign_btn.innerHTML = 'Sign In'
+        }
+    })
+
+    const setCookie = (name, value, exp) => {
+        document.cookie = `${name}=${value}; expires=${exp}; path=/`
+    }
+
+    const getCookie = (name) => {
+        const cDecoded = decodeURIComponent(document.cookie);
+        const cArray = cDecoded.split('; ')
+        let result = null;
+
+        cArray.forEach(e => {
+            if(e.indexOf(name) == 0){
+                result = e.substring(name.length + 1)
+            }
+        })
+        return result;
+    }
+  
+    const username = document.querySelector('.username')
+    const password = document.querySelector('.password')
+    sign_btn.addEventListener('click', () => {
+        if(sign_btn.innerHTML === 'Sign In'){
+            if(getCookie(username.value) === password.value){
+                sessionStorage.setItem('username', username.value)
+                location.reload()
+            }else{
+                sign_denied.style.display = 'block';
+            }
+        }else{
+            setCookie(username.value, password.value)
+            sessionStorage.setItem('username', username.value)
+            sign_container.style.display = 'none';
+        }
+
+    })
+
+    const sign_out_btn = document.querySelector('.sign_out_btn')
+    sign_out_btn.addEventListener('click', () => {
+        sessionStorage.setItem('username', false);
+        location.reload()
+    })
+
+    const load_user_posts = () => {
+        const all_user_entries = (sessionStorage.getItem('username') === 'admin') ? document.querySelectorAll('.plant_entry', '.planted') : document.querySelectorAll(`.${sessionStorage.getItem('username')}`)
+
+        all_user_entries.forEach(entry => {
+            if(entry.querySelector('.delete_cut')){
+                entry.classList.remove('other_post')
+                entry.querySelector('.delete_cut').classList.remove('no_access')
+            }else if(entry.querySelector('.edit_icon')){
+                entry.querySelector('.edit_icon').classList.remove('no_access')
+            }
+        })
+    }
+    load_user_posts()
 
 });
 

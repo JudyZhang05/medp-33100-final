@@ -72,16 +72,54 @@
     </svg>
     
     <div class="brand_header">
-        <h1 class="brand_name header_brand">PlaneTree</h1>
-        <p class="header_brand">Have a plant? Share it!</p>
+        <div class="header_section" id="balance">
+            <img src="https://www.svgrepo.com/show/347014/account-circle.svg" alt="account_logo" width="40px">
+            <p class="header_brand">Sign In</p>
+        </div>
+        <div class="header_section">
+            <h1 class="brand_name header_brand">PlaneTree</h1>
+            <p class="header_brand">Have a plant? Share it!</p>
+        </div>
+        <div class="header_section" id="account">
+            <img src="https://www.svgrepo.com/show/347014/account-circle.svg" alt="account_logo" width="40px">
+            <p class="account_name">Sign In</p>
+        </div>
     </div>    
+
+    <div class="sign_container">
+        <div class="sign_section">
+            <p class="sign_denied">Wrong Password or Username</p>
+            <div class="sign_header">
+                <div class="sign_method">
+                    <h1>Sign In</h1>
+                    <small class="switch_sign">No account? Sign Up!</small>
+                </div>
+                <img class="close_sign" src="https://www.svgrepo.com/show/520676/cross.svg" width="50px" alt="exit icon">
+            </div>
+            <p class="label">Username:</p>
+            <input class="username" placeholder="MenthaLover123">
+            <p class="label">Password:</p>
+            <input class="password" placeholder="Enter Password">
+            <button class="sign_btn">Sign In</button>
+        </div>
+
+        <div class="sign_out_section">
+            <div class="sign_header">
+                <h1>Profile</h1>
+                <img class="close_sign" src="https://www.svgrepo.com/show/520676/cross.svg" width="50px" alt="exit icon">
+            </div>
+            <p class="label">Username:</p>
+            <p class="user_name">MenthaLover123</p>
+            <button class="sign_btn sign_out_btn">Sign Out</button>
+        </div>
+    </div>
 
     <div class="plant_container">
         <div class="plant_structure">
             {{#each entries as |entry index|}}
                 <div class="entry entry_{{index}}">
-                    <div class="plant_entry entry_{{index}}" id="{{this._id}}">
-                        <img class="delete_cut" src="https://www.svgrepo.com/show/435111/scissor-line-cut.svg" width="30px" alt="delete icon">
+                    <div class="plant_entry entry_{{index}} {{this.user}} other_post" id="{{this._id}}">
+                        <img class="delete_cut no_access" src="https://www.svgrepo.com/show/435111/scissor-line-cut.svg" width="30px" alt="delete icon">
                         <div class="plant_preview">
                             <h3 class="plantName">{{this.name}}</h3>
                             {{#each this.stage}}
@@ -131,7 +169,7 @@
     <div class="planted_container" >
         <div class="posted_entry">
         {{#each entries as |entry index|}}
-            <div class="planted entry_{{index}}" id="{{this._id}}">
+            <div class="planted entry_{{index}} {{this.user}}" id="{{this._id}}">
                 <div class="posted_entry_header">
                     <div class="headerName">
                         <div class="header_closer">
@@ -139,7 +177,7 @@
                                 <small>Official Name:</small>
                                 <div class="header_edit_post entry_{{index}}">
                                     <h2 class="plantedName entry_{{index}}">{{this.name}}</h2>
-                                    <img src="https://www.svgrepo.com/show/510962/edit-pencil-line-01.svg" width="30px" alt="edit icon" class="edit_icon" id="{{this._id}}">
+                                    <img src="https://www.svgrepo.com/show/510962/edit-pencil-line-01.svg" width="30px" alt="edit icon" class="edit_icon no_access" id="{{this._id}}">
                                 </div>
                             </span>
                             <img class="close_post entry_{{index}}" src="https://www.svgrepo.com/show/520676/cross.svg" width="50px" alt="exit icon">

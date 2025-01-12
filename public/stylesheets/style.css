@@ -62,8 +62,8 @@ main{
     height: 10vh;
     background-color: #D4E8DE;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
+    align-items: center;
 }
 .brand_header p{
     text-align: center;
@@ -72,6 +72,80 @@ main{
 }
 .header_brand{
     opacity: 0%;
+}
+.header_section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#account{
+    margin-right: 2%;
+    cursor: pointer;
+}
+#balance{
+    margin-left: 2%;
+    user-select: none;
+    visibility: hidden;
+}
+
+/* sign board */
+.sign_container{
+    position: absolute;
+    z-index: 100;
+    top: 0;
+    height: 100vh;
+    width: 100vw;
+    background-color: #d4e8def5;
+    justify-content: center;
+    align-items: center;
+    display: none;
+}
+.sign_section, .sign_out_section{
+    font-family: "Rethink Sans", serif;
+    background-color: #FAAF90;
+    padding: 4%;
+    border-radius: 37px;
+    width: 60vw;
+    flex-direction: column;
+}
+.sign_out_section{
+    width: 30vw;
+}
+.sign_header{
+    display: flex;
+    justify-content: space-between;
+    margin: 1%;
+    align-items: center;
+}
+.sign_method h1{
+    margin: 0;
+}
+.sign_method small, .close_sign{
+    cursor: pointer;
+}
+.sign_btn{
+    all: unset;
+    cursor: pointer;
+    background-color: #8BABF1;
+    border-radius: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2% 5%;
+    margin: auto;
+    margin-top: 5%;
+}
+
+/* signout */
+.sign_header h1{
+    margin: 0;
+}
+.user_name{
+    margin: 0;
+}
+.sign_out_section{
+    display: none;
+    text-align: center;
 }
 
 /* main content */
@@ -311,6 +385,15 @@ main{
     display: block;
 }
 
+.other_post{
+    padding-top: 3%;
+    padding-bottom: 3%;
+    flex-direction: column !important;
+}
+.no_access{
+    display:none;
+}
+
 .new_plant_entry{
     opacity: 0%;
     scale: 0;
@@ -331,7 +414,7 @@ main{
 }
 
 /* posting screen */
-.post_denied{
+.post_denied, .sign_denied{
     display: none;
     background-color: #8BABF1;
     color: white;
@@ -547,7 +630,7 @@ textarea, .create_comment{
 .skip{
     visibility: hidden;
 }
-small:not(.instruction){
+small:not(.instruction, .sign_method small){
     font-weight: bold;
 }
 
