@@ -295,7 +295,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // OPEN to view post
     const planted_container = document.querySelector('.planted_container')
     plantEntries.forEach(entry => {
-        let entry_area = entry.querySelector('.plant_preview') 
+        let entry_area = (sessionStorage.getItem('username') === 'false' || sessionStorage.getItem('username') === null) ? entry.querySelector('.plant_entry') : entry.querySelector('.plant_preview');
         entry_area.addEventListener('click', () => {
             sessionStorage.setItem('viewPost', `.planted.${entry.classList[1]}`)
             
