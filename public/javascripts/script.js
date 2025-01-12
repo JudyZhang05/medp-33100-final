@@ -614,6 +614,7 @@ document.addEventListener('DOMContentLoaded', () => {
             setCookie(username.value, password.value)
             sessionStorage.setItem('username', username.value)
             sign_container.style.display = 'none';
+            location.reload()
         }
 
     })
