@@ -557,6 +557,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const sign_denied = document.querySelector('.sign_denied')
     close_all_sign.forEach(close_sign => {
         close_sign.addEventListener('click', () => {
+            sign_denied.innerHTML = 'Wrong Password or Username'
             sign_denied.style.display = 'none';
             sign_container.style.display = 'none';
         })
@@ -608,15 +609,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 sessionStorage.setItem('username', username.value)
                 location.reload()
             }else{
+                sign_denied.innerHTML = 'Wrong Password or Username'
                 sign_denied.style.display = 'block';
             }
-        }else{
+        }else if(getCookie(username.value) === null){
             setCookie(username.value, password.value)
             sessionStorage.setItem('username', username.value)
             sign_container.style.display = 'none';
             location.reload()
+        }else{
+            sign_denied.innerHTML = 'Username is already taken'
+            sign_denied.style.display = 'block';
         }
-
     })
 
     const sign_out_btn = document.querySelector('.sign_out_btn')
